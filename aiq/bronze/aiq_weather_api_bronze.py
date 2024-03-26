@@ -53,6 +53,10 @@ customer_source=config_result['adls_inbound_path'][0]
 
 # COMMAND ----------
 
+customer_source=config_result['adls_inbound_path'][0] 
+
+# COMMAND ----------
+
 path_src=path_silver+customer_source
 path_tgt=path_bronze+adls_bronze_target_path
 

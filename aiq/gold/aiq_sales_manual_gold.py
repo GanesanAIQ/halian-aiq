@@ -138,11 +138,6 @@ except Exception as e:
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC select * from aiq_sales.aiq_elt_audit_log
-
-# COMMAND ----------
-
-# MAGIC %sql
 # MAGIC select * from aiq_sales.fct_aiq_sales
 
 # COMMAND ----------

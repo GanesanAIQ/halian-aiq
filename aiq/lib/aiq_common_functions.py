@@ -53,7 +53,7 @@ elt_config_file_name = "halian_aiq_elt_config.csv"
 path_inbound = "/mnt/" + storage_account_name + "/inbound/"
 path_bronze = "/mnt/" + storage_account_name + "/bronze/"
 path_silver = "/mnt/" + storage_account_name + "/silver/"
-path_gold = "/mnt/" + storage_account_name + "/gold/"
+path_gold = 'abfss://'+container_name+'@'+storage_account_name+'.dfs.core.windows.net/gold/'
 path_error = "/mnt/" + storage_account_name + "/error/"
 path_archive = "/mnt/" + storage_account_name + "/archive/"
 path_meta_data = "/mnt/" + storage_account_name + "/metadata/"
@@ -211,3 +211,8 @@ def schemaValidation(df_metadata, df_actual):
     else:
         return False
 
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC use catalog halian_aiq

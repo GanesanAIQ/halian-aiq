@@ -114,24 +114,12 @@ end_time= datetime.now()
 # COMMAND ----------
 
 try:
-    # check if the data is available to write, if yes then write
-    if not (df_sales_to_silver.isEmpty()):
         writeToTarget(df_sales_to_silver, file_format_parquet, path_tgt)
         # insert a log entry for the success case
         log_message = "Data ingestion successful to " + adb_silver_zone
         log_query = f""" INSERT INTO aiq_sales.aiq_elt_audit_log VALUES ('{project_name}','{source_file_name}','{nb_name}','{nb_path}', '{return_code_success}','{adb_silver_zone}','{start_time}','{end_time}','{log_message}')"""
         spark.sql(log_query)
 
-    else:
-        # insert a log entry for the failure case
-        log_message = (
-            "Data is not ingested to "
-            + adb_silver_zone
-            + " check the notebook "
-            + nb_path
-        )
-        log_query = f""" INSERT INTO aiq_sales.aiq_elt_audit_log VALUES ('{project_name}','{source_file_name}','{nb_name}','{nb_path}', '{return_code_failure}','{adb_silver_zone}','{start_time}','{end_time}','{log_message}')"""
-        spark.sql(log_query)
 except Exception as e:
     output = f"{e}"
     outputres = re.sub("[^a-zA-Z0-9 \n\.]", "", output)

@@ -15,6 +15,7 @@
 
 path_elt_config_file_name=path_elt_config_file+'/'+elt_config_file_name
 path_tgt=path_gold+'elt_config_delta'
+path_elt_log=path_gold+'elt_log_delta'
 
 # COMMAND ----------
 
@@ -38,6 +39,11 @@ df_transform_config=df_read_config.withColumn('last_load_date',to_date(df_read_c
 
 # MAGIC %md
 # MAGIC Create database
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC use catalog halian_aiq
 
 # COMMAND ----------
 
@@ -66,7 +72,7 @@ df_transform_config.createOrReplaceTempView('elt_config_stg')
 # COMMAND ----------
 
 qry_create_table=f"""
-CREATE TABLE IF NOT EXISTS aiq_sales.aiq_elt_config USING DELTA LOCATION '{path_tgt}'
+CREATE TABLE IF NOT EXISTS halian_aiq.aiq_sales.aiq_elt_config USING DELTA LOCATION '{path_tgt}'
 """
 
 # COMMAND ----------
@@ -77,7 +83,7 @@ CREATE TABLE IF NOT EXISTS aiq_sales.aiq_elt_config USING DELTA LOCATION '{path_
 # COMMAND ----------
 
 qry = f"""
-MERGE INTO aiq_sales.aiq_elt_config tgt
+MERGE INTO halian_aiq.aiq_sales.aiq_elt_config tgt
 USING 
 (
   select
@@ -149,7 +155,7 @@ try:
         spark.sql(qry)
     else:
         print("Writing the data first time into delta table")
-        writetotarget(df_transform_config, file_format_delta, path_tgt)
+        writeToTarget(df_transform_config, file_format_delta, path_tgt)
         spark.sql(qry_create_table)
 except Exception as e:
     output = f"{e}"
@@ -163,8 +169,19 @@ except Exception as e:
 
 # COMMAND ----------
 
+# MAGIC %sql
+# MAGIC update aiq_sales.aiq_elt_config set api_qry_parm ='?lat=%s&lon=%s&appid=%s' where  
+# MAGIC api_qry_parm ='?lat={lat}&lon={lon}&appid={API key}';
+# MAGIC update aiq_sales.aiq_elt_config set adls_inbound_path='customer/' where bronze_nb='aiq_weather_api_bronze'
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC Create audit log table
+
+# COMMAND ----------
+
+path_elt_log
 
 # COMMAND ----------
 
@@ -186,3 +203,12 @@ LOCATION '{path_elt_log}'"""
 # COMMAND ----------
 
 spark.sql(qry_create_audit_log)
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select * from aiq_sales.aiq_elt_audit_log
+
+# COMMAND ----------
+
+
