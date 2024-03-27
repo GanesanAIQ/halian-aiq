@@ -20,36 +20,12 @@ order by 1
 -- COMMAND ----------
 
 -- MAGIC %md
--- MAGIC Customer API Random Record Check
+-- MAGIC Customer API Random Record Check for above cutomer with the lat and lng values as query parameters for weather api
 
 -- COMMAND ----------
 
 select * from  halian_aiq.aiq_sales.vw_dim_aiq_customer_weather
 where lattitude = -37.3159 and logitude = 81.1496
-
--- COMMAND ----------
-
-drop table halian_aiq.aiq_sales.dim_aiq_customer
-
--- COMMAND ----------
-
-drop table halian_aiq.aiq_sales.dim_aiq_customer_weather
-
--- COMMAND ----------
-
---drop table halian_aiq.aiq_sales.fct_aiq_sales
-
--- COMMAND ----------
-
---update halian_aiq.aiq_sales.aiq_elt_config set last_load_date = '2000-01-01'
-
--- COMMAND ----------
-
-desc halian_aiq.aiq_sales.aiq_elt_config
-
--- COMMAND ----------
-
-select * from halian_aiq.aiq_sales.aiq_elt_config
 
 -- COMMAND ----------
 
