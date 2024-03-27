@@ -13,7 +13,7 @@
 # MAGIC 	,dim_cust.phone
 # MAGIC 	,dim_cust.city
 # MAGIC 	,dim_cust.website
-# MAGIC 	,dim_cust.website AS customer_website
+# MAGIC 	,dim_cust.company_name
 # MAGIC 	,dim_cust_wthr.lat AS lattitude
 # MAGIC 	,dim_cust_wthr.lon AS logitude
 # MAGIC 	,dim_cust_wthr.TEMP

@@ -9,10 +9,16 @@
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE VIEW aiq_sales.vw_aiq_product_sales_dataset AS
 # MAGIC SELECT fct_sales.product_id
-# MAGIC 	,cast(avg(fct_sales.quantity) AS DECIMAL(15, 6)) average__order_quantity
+# MAGIC 	,cast(avg(fct_sales.quantity) AS DECIMAL(15, 6)) average_order_quantity
 # MAGIC FROM aiq_sales.vw_fct_aiq_sales fct_sales
 # MAGIC GROUP BY fct_sales.product_id
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select * from aiq_sales.vw_aiq_product_sales_dataset 
 
 # COMMAND ----------
 
@@ -22,6 +28,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE VIEW aiq_sales.vw_aiq_top_product_sales_dataset AS
 # MAGIC WITH sales_product
 # MAGIC AS (
 # MAGIC 	SELECT fct_sales.product_id

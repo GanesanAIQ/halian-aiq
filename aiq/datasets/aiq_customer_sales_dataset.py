@@ -3,18 +3,19 @@
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC select * from aiq_sales.vw_dim_aiq_customer_weather 
+# MAGIC %md
+# MAGIC Customer wise total sale amount
 
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE VIEW aiq_sales.vw_aiq_customer_sales_dataset AS
 # MAGIC SELECT dim_cust.customer_id
 # MAGIC 	,dim_cust.name
 # MAGIC 	,dim_cust.email
 # MAGIC 	,dim_cust.phone
 # MAGIC 	,dim_cust.city
-# MAGIC 	,dim_cust.customer_website
+# MAGIC 	,dim_cust.company_name
 # MAGIC 	,dim_cust.website
 # MAGIC 	,dim_cust.lattitude
 # MAGIC 	,dim_cust.logitude
@@ -31,7 +32,7 @@
 # MAGIC 	,dim_cust.email
 # MAGIC 	,dim_cust.phone
 # MAGIC 	,dim_cust.city
-# MAGIC 	,dim_cust.customer_website
+# MAGIC 	,dim_cust.company_name
 # MAGIC 	,dim_cust.website
 # MAGIC 	,dim_cust.lattitude
 # MAGIC 	,dim_cust.logitude
@@ -44,12 +45,18 @@
 
 # COMMAND ----------
 
+# MAGIC %sql
+# MAGIC select * from aiq_sales.vw_aiq_customer_sales_dataset
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC Top 5 customers based on total sales
 
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC CREATE OR REPLACE VIEW aiq_sales.vw_aiq_top_customer_sales_dataset AS
 # MAGIC WITH sales_customers
 # MAGIC AS (
 # MAGIC 	SELECT dim_cust.customer_id
